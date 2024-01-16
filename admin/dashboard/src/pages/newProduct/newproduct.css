@@ -1,0 +1,46 @@
+.newProduct {
+  padding: 20px;
+  flex: 4;
+}
+
+.newProductItem {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  margin-right: 20px;
+}
+.newProductItem > label {
+  margin-bottom: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  color: gray;
+}
+
+.newProductItem > input {
+  height: 20px;
+  padding: 10px;
+  border: 1px solid gray;
+  border-radius: 5px;
+}
+.newProductItem .fileInput {
+  border: none;
+}
+.newProductSelect {
+  height: 40px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.newProductBtn {
+  width: 200px;
+  /* height: 30px; */
+  border: none;
+  background-color: darkblue;
+  color: #fff;
+  padding: 7px 10px;
+  font-weight: 600;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 30px;
+}

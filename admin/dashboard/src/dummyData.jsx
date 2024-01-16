@@ -1,0 +1,242 @@
+export const data = [
+  {
+    name: "Jan",
+    "Active User": 4000,
+  },
+  {
+    name: "Feb",
+    "Active User": 3000,
+  },
+  {
+    name: "Mar",
+    "Active User": 2000,
+  },
+  {
+    name: "Apr",
+    "Active User": 2780,
+  },
+  {
+    name: "May",
+    "Active User": 1890,
+  },
+  {
+    name: "Jun",
+    "Active User": 2390,
+  },
+  {
+    name: "Jul",
+    "Active User": 3490,
+  },
+  {
+    name: "Agu",
+    "Active User": 490,
+  },
+  {
+    name: "Sep",
+    "Active User": 1490,
+  },
+  {
+    name: "Oct",
+    "Active User": 1190,
+  },
+  {
+    name: "Nov",
+    "Active User": 1790,
+  },
+  {
+    name: "Dec",
+    "Active User": 1986,
+  },
+];
+
+export const userrow = [
+  {
+    id: 1,
+    username: "John Snow",
+    avatar: "https://upload.wikimedia.org/wikipedia/en/8/86/Avatar_Aang.png",
+    email: "john@gmail.com",
+    status: "active",
+    transaction: "$120.00",
+  },
+  {
+    id: 2,
+    username: "John Snow",
+    avatar: "https://upload.wikimedia.org/wikipedia/en/8/86/Avatar_Aang.png",
+    email: "john@gmail.com",
+    status: "active",
+    transaction: "$120.00",
+  },
+  {
+    id: 3,
+    username: "John Snow",
+    avatar: "https://upload.wikimedia.org/wikipedia/en/8/86/Avatar_Aang.png",
+    email: "john@gmail.com",
+    status: "active",
+    transaction: "$120.00",
+  },
+  {
+    id: 4,
+    username: "John Snow",
+    avatar: "https://upload.wikimedia.org/wikipedia/en/8/86/Avatar_Aang.png",
+    email: "john@gmail.com",
+    status: "active",
+    transaction: "$120.00",
+  },
+  {
+    id: 5,
+    username: "John Snow",
+    avatar: "https://upload.wikimedia.org/wikipedia/en/8/86/Avatar_Aang.png",
+    email: "john@gmail.com",
+    status: "active",
+    transaction: "$120.00",
+  },
+  {
+    id: 6,
+    username: "John Snow",
+    avatar: "https://upload.wikimedia.org/wikipedia/en/8/86/Avatar_Aang.png",
+    email: "john@gmail.com",
+    status: "active",
+    transaction: "$120.00",
+  },
+  {
+    id: 7,
+    username: "John Snow",
+    avatar: "https://upload.wikimedia.org/wikipedia/en/8/86/Avatar_Aang.png",
+    email: "john@gmail.com",
+    status: "active",
+    transaction: "$120.00",
+  },
+  {
+    id: 8,
+    username: "John Snow",
+    avatar: "https://upload.wikimedia.org/wikipedia/en/8/86/Avatar_Aang.png",
+    email: "john@gmail.com",
+    status: "active",
+    transaction: "$120.00",
+  },
+  {
+    id: 9,
+    username: "John Snow",
+    avatar: "https://upload.wikimedia.org/wikipedia/en/8/86/Avatar_Aang.png",
+    email: "john@gmail.com",
+    status: "active",
+    transaction: "$120.00",
+  },
+  {
+    id: 10,
+    username: "John Snow",
+    avatar: "https://upload.wikimedia.org/wikipedia/en/8/86/Avatar_Aang.png",
+    email: "john@gmail.com",
+    status: "active",
+    transaction: "$120.00",
+  },
+];
+
+export const productrow = [
+  {
+    id: 1,
+    name: "Apple Airpods",
+    stock: 123,
+    img: "https://thehometrend.in/cdn/shop/files/123_75e8743e-ee78-44ab-9bf6-2f02f19426dc.jpg?v=1693378455&width=1445",
+    email: "john@gmail.com",
+    status: "active",
+    price: "$120.00",
+  },
+  {
+    id: 2,
+    name: "Apple Airpods",
+    stock: 123,
+    img: "https://thehometrend.in/cdn/shop/files/123_75e8743e-ee78-44ab-9bf6-2f02f19426dc.jpg?v=1693378455&width=1445",
+    email: "john@gmail.com",
+    status: "active",
+    price: "$120.00",
+  },
+  {
+    id: 3,
+    name: "Apple Airpods",
+    stock: 123,
+    img: "https://thehometrend.in/cdn/shop/files/123_75e8743e-ee78-44ab-9bf6-2f02f19426dc.jpg?v=1693378455&width=1445",
+    email: "john@gmail.com",
+    status: "active",
+    price: "$120.00",
+  },
+  {
+    id: 4,
+    name: "Apple Airpods",
+    stock: 123,
+    img: "https://thehometrend.in/cdn/shop/files/123_75e8743e-ee78-44ab-9bf6-2f02f19426dc.jpg?v=1693378455&width=1445",
+    email: "john@gmail.com",
+    status: "active",
+    price: "$120.00",
+  },
+  {
+    id: 5,
+    name: "Apple Airpods",
+    stock: 123,
+    img: "https://thehometrend.in/cdn/shop/files/123_75e8743e-ee78-44ab-9bf6-2f02f19426dc.jpg?v=1693378455&width=1445",
+    email: "john@gmail.com",
+    status: "active",
+    price: "$120.00",
+  },
+  {
+    id: 6,
+    name: "Apple Airpods",
+    stock: 123,
+    img: "https://thehometrend.in/cdn/shop/files/123_75e8743e-ee78-44ab-9bf6-2f02f19426dc.jpg?v=1693378455&width=1445",
+    email: "john@gmail.com",
+    status: "active",
+    price: "$120.00",
+  },
+  {
+    id: 7,
+    name: "Apple Airpods",
+    stock: 123,
+    img: "https://thehometrend.in/cdn/shop/files/123_75e8743e-ee78-44ab-9bf6-2f02f19426dc.jpg?v=1693378455&width=1445",
+    email: "john@gmail.com",
+    status: "active",
+    price: "$120.00",
+  },
+  {
+    id: 8,
+    name: "Apple Airpods",
+    stock: 123,
+    img: "https://thehometrend.in/cdn/shop/files/123_75e8743e-ee78-44ab-9bf6-2f02f19426dc.jpg?v=1693378455&width=1445",
+    email: "john@gmail.com",
+    status: "active",
+    price: "$120.00",
+  },
+  {
+    id: 9,
+    name: "Apple Airpods",
+    stock: 123,
+    img: "https://thehometrend.in/cdn/shop/files/123_75e8743e-ee78-44ab-9bf6-2f02f19426dc.jpg?v=1693378455&width=1445",
+    email: "john@gmail.com",
+    status: "active",
+    price: "$120.00",
+  },
+  {
+    id: 10,
+    name: "Apple Airpods",
+    stock: 123,
+    img: "https://thehometrend.in/cdn/shop/files/123_75e8743e-ee78-44ab-9bf6-2f02f19426dc.jpg?v=1693378455&width=1445",
+    email: "john@gmail.com",
+    status: "active",
+    price: "$120.00",
+  },
+];
+
+export const productData = [
+  {
+    name: "Jan",
+    Sales: 1000,
+  },
+  {
+    name: "Feb",
+    Sales: 700,
+  },
+  {
+    name: "Mar",
+    Sales: 2000,
+  },
+];
+// export default { data, row };
