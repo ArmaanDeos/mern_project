@@ -2,20 +2,18 @@ import { asyncHandler } from "../utils/AsyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { User } from "../models/user.models.js";
+import jwt from "jsonwebtoken";
 
 // ? GENERATE ACCESS TOKEN AND REFRESH TOKEN
-const generateAccessRefreshToken = async (userId) => {
+const generateAccessAndRefreshToken = async (userId) => {
   try {
-    // find user
     const user = await User.findById(userId);
-    // generate access and refresh token
     const accessToken = user.generateAccessToken();
-    const refreshToken = user.generateAccessToken();
+    const refreshToken = user.generateRefreshToken();
 
-    // save refresh token
     user.refreshToken = refreshToken;
     await user.save({ validateBeforeSave: false });
-    // return access and refresh token
+
     return { accessToken, refreshToken };
   } catch (error) {
     throw new ApiError(
@@ -106,10 +104,21 @@ const loginUser = asyncHandler(async (req, res) => {
     throw new ApiError(401, "Password is incorrect");
   }
 
-  // get access and refresh token
+  // // get access and refresh token
 
-  const { accessToken, refreshToken } = await generateAccessRefreshToken(
-    user._id
+  // const { accessToken, refreshToken } = await generateAccessAndRefreshToken(
+  //   user._id
+  // );
+
+  const accessToken = jwt.sign(
+    {
+      id: user._id,
+      isAdmin: user.isAdmin,
+    },
+    process.env.ACCESS_TOKEN_SECRET,
+    {
+      expiresIn: process.env.ACCESS_TOKEN_EXPIRY,
+    }
   );
 
   // get logged user and remove password
@@ -126,14 +135,14 @@ const loginUser = asyncHandler(async (req, res) => {
   return res
     .status(200)
     .cookie("accessToken", accessToken, options)
-    .cookie("refreshToken", refreshToken, options)
+
     .json(
       new ApiResponse(
         200,
-        { user: loggedInUser, accessToken, refreshToken },
+        { user: loggedInUser, accessToken },
         "User Logged In successfully."
       )
     );
 });
 
-export { registerUser, loginUser, generateAccessRefreshToken };
+export { registerUser, loginUser, generateAccessAndRefreshToken };
