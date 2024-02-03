@@ -1,6 +1,5 @@
 import { Router } from "express";
 const router = Router();
-import { Router } from "express";
 
 import {
   verifyToken,
@@ -13,9 +12,10 @@ import {
   getAllOrders,
   getUserOrder,
   updateOrder,
+  getMonthlyIncome,
 } from "../controllers/order.controllers.js";
 
-router.route("/").post(verifyTokenAndAuthorization, createOrder);
+router.route("/").post(verifyToken, createOrder);
 
 router.route("/:id").put(verifyTokenAndAdmin, updateOrder);
 
@@ -23,6 +23,8 @@ router.route("/:id").delete(verifyTokenAndAdmin, deleteOrder);
 
 router.route("/find/:id").get(verifyTokenAndAuthorization, getUserOrder);
 
-router.route("/:id").get(verifyTokenAndAdmin, getAllOrders);
+router.route("/").get(verifyTokenAndAdmin, getAllOrders);
+
+router.route("/income").get(verifyTokenAndAdmin, getMonthlyIncome);
 
 export default router;

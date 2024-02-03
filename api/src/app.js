@@ -34,7 +34,7 @@ import orderRoutes from "./routes/order.routes.js";
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/products", productRoutes);
-app.use("/api/v1/cart", cartRoutes);
+app.use("/api/v1/carts", cartRoutes);
 app.use("/api/v1/orders", orderRoutes);
 
 export { app };

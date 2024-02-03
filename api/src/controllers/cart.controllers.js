@@ -1,7 +1,7 @@
 import { asyncHandler } from "../utils/AsyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
-import Cart from "../models/cart.models.js";
+import { Cart } from "../models/cart.models.js";
 
 // ? CREATE CART
 const createCart = asyncHandler(async (req, res) => {
