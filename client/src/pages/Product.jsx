@@ -8,6 +8,8 @@ import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import RemoveOutlinedIcon from "@mui/icons-material/RemoveOutlined";
 import { useLocation } from "react-router-dom";
 import { publicRequest } from "../utilities/requestMethods";
+import { useDispatch } from "react-redux";
+import { addProduct } from "../redux/cartSlice";
 
 const Container = styled.div``;
 
@@ -68,6 +70,7 @@ const FilterColor = styled.div`
   background-color: ${(props) => props.color};
   margin: 0px 5px;
   cursor: pointer;
+  border: 1px solid black;
 `;
 
 const FilterSize = styled.select`
@@ -123,7 +126,7 @@ const Product = () => {
   const [quantity, setQuantity] = useState(1);
   const [color, setColor] = useState("");
   const [size, setSize] = useState("");
-
+  const dispatch = useDispatch();
   useEffect(() => {
     const getProduct = async () => {
       try {
@@ -151,6 +154,11 @@ const Product = () => {
   const handleColor = (c) => {
     setColor(c);
     alert(`${c} color is selected`);
+  };
+
+  // add to cart button handler function
+  const handleAddToCartBtn = () => {
+    dispatch(addProduct({ ...product, quantity, color, size }));
   };
 
   return (
@@ -196,7 +204,7 @@ const Product = () => {
                 onClick={() => handleQuantity("inc")}
               />
             </AmountContainer>
-            <Button>Add To Cart</Button>
+            <Button onClick={handleAddToCartBtn}>Add To Cart</Button>
           </AddContainer>
         </InfoContainer>
       </Wrapper>
