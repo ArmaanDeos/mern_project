@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Navbar from "../components/Navbar";
 import Announcement from "../components/Announcement";
@@ -6,6 +6,8 @@ import Newsletter from "../components/Newsletter";
 import Footer from "../components/Footer";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import RemoveOutlinedIcon from "@mui/icons-material/RemoveOutlined";
+import { useLocation } from "react-router-dom";
+import { error } from "console";
 
 const Container = styled.div``;
 
@@ -113,6 +115,21 @@ const Button = styled.button`
 `;
 
 const Product = () => {
+  const location = useLocation();
+  const id = location.pathname.split("/")[2];
+  // console.log(id);
+
+  const [product, setProduct] = useState({});
+
+  useEffect(() => {
+    const getProduct = async () => {
+      try {
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  }, [id]);
+
   return (
     <Container>
       <Announcement />
@@ -150,7 +167,6 @@ const Product = () => {
                 <FilterSizeOption>M</FilterSizeOption>
                 <FilterSizeOption>L</FilterSizeOption>
                 <FilterSizeOption>XL</FilterSizeOption>
-                <FilterSizeOption>XXL</FilterSizeOption>
               </FilterSize>
             </Filter>
           </FilterContainer>
