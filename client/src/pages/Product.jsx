@@ -7,7 +7,7 @@ import Footer from "../components/Footer";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import RemoveOutlinedIcon from "@mui/icons-material/RemoveOutlined";
 import { useLocation } from "react-router-dom";
-import { error } from "console";
+import { publicRequest } from "../utilities/requestMethods";
 
 const Container = styled.div``;
 
@@ -120,15 +120,38 @@ const Product = () => {
   // console.log(id);
 
   const [product, setProduct] = useState({});
+  const [quantity, setQuantity] = useState(1);
+  const [color, setColor] = useState("");
+  const [size, setSize] = useState("");
 
   useEffect(() => {
     const getProduct = async () => {
       try {
+        const res = await publicRequest.get(`/products/find/${id}`);
+        // console.log(res.data.data);
+        setProduct(res.data.data);
       } catch (error) {
         console.log(error);
       }
     };
+    getProduct();
   }, [id]);
+
+  const handleQuantity = (type) => {
+    if (type === "dec") {
+      quantity > 1 && setQuantity(quantity - 1);
+      // if (quantity > 1) {
+      //   setQuantity(quantity - 1);
+      // }
+    } else {
+      setQuantity(quantity + 1);
+    }
+  };
+
+  const handleColor = (c) => {
+    setColor(c);
+    alert(`${c} color is selected`);
+  };
 
   return (
     <Container>
@@ -137,45 +160,41 @@ const Product = () => {
 
       <Wrapper>
         <ImgContainer>
-          <Image src="https://i.ibb.co/sKzVPk7/full-growth-beautiful-young-caucasian-girl-overalls-smiles-camera-pink-background-lifestyle-concept.png" />
+          <Image src={product.img} />
         </ImgContainer>
         <InfoContainer>
-          <Title>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit.{" "}
-          </Title>
-          <Desc>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Inventore
-            cumque fugiat quod, tempora excepturi, magnam autem ratione quis
-            maiores reiciendis, tenetur porro amet. Voluptatum corporis quia
-            veniam ipsa officia aspernatur in ab porro incidunt animi temporibus
-            ullam ut mollitia, dolore esse vel sit eveniet sint recusandae, odit
-            dolorum adipisci.{" "}
-          </Desc>
-          <Price>$ 20</Price>
+          <Title>{product.title}</Title>
+          <Desc>{product.desc}</Desc>
+          <Price>$ {product.price}</Price>
           <FilterContainer>
             <Filter>
               <FilterTitle>Color</FilterTitle>
-              <FilterColor color="black" />
-              <FilterColor color="darkblue" />
-              <FilterColor color="gray" />
+              {product.color?.map((c) => (
+                <FilterColor color={c} key={c} onClick={() => handleColor(c)} />
+              ))}
             </Filter>
 
             <Filter>
               <FilterTitle>Size</FilterTitle>
-              <FilterSize>
-                <FilterSizeOption>S</FilterSizeOption>
-                <FilterSizeOption>M</FilterSizeOption>
-                <FilterSizeOption>L</FilterSizeOption>
-                <FilterSizeOption>XL</FilterSizeOption>
+              <FilterSize onChange={(e) => setSize(e.target.value)}>
+                {product.size?.map((s) => (
+                  <FilterSizeOption key={s}>{s}</FilterSizeOption>
+                ))}
               </FilterSize>
             </Filter>
           </FilterContainer>
 
           <AddContainer>
             <AmountContainer>
-              <RemoveOutlinedIcon />
-              <Amount>1</Amount>
-              <AddOutlinedIcon />
+              <RemoveOutlinedIcon
+                style={{ cursor: "pointer" }}
+                onClick={() => handleQuantity("dec")}
+              />
+              <Amount>{quantity}</Amount>
+              <AddOutlinedIcon
+                style={{ cursor: "pointer" }}
+                onClick={() => handleQuantity("inc")}
+              />
             </AmountContainer>
             <Button>Add To Cart</Button>
           </AddContainer>
