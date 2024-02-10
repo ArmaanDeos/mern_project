@@ -5,6 +5,8 @@ import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import RemoveOutlinedIcon from "@mui/icons-material/RemoveOutlined";
+import { useSelector } from "react-redux";
+import StripeCheckout from "react-stripe-checkout";
 
 const Container = styled.div``;
 
@@ -157,6 +159,9 @@ const Button = styled.button`
 `;
 
 const Cart = () => {
+  const cart = useSelector((state) => state.cart);
+  // console.log(cart);
+
   return (
     <Container>
       <Announcement />
@@ -173,63 +178,41 @@ const Cart = () => {
         </Top>
         <Bottom>
           <Info>
-            <Product>
-              <ProductDetail>
-                <Image src="https://i.ibb.co/MBw1Hk4/trendy-top-design-mockup-presented-wooden-hanger-removebg-preview.png" />
-                <Details>
-                  <ProductName>
-                    <b>Product :</b> Women Shirt Printed
-                  </ProductName>
-                  <ProductId>
-                    <b>ID :</b> 89345904
-                  </ProductId>
-                  <ProductColor color="black" />
-                  <ProductSize>
-                    <b>Size :</b> 37.5
-                  </ProductSize>
-                </Details>
-              </ProductDetail>
-              <PriceDetail>
-                <ProductAmountContainer>
-                  <AddOutlinedIcon />
-                  <ProductAmount>2</ProductAmount>
-                  <RemoveOutlinedIcon />
-                </ProductAmountContainer>
-                <ProductPrice>$ 40</ProductPrice>
-              </PriceDetail>
-            </Product>
-            {/* <Hr /> */}
-            <Product>
-              <ProductDetail>
-                <Image src="https://i.ibb.co/MBw1Hk4/trendy-top-design-mockup-presented-wooden-hanger-removebg-preview.png" />
-                <Details>
-                  <ProductName>
-                    <b>Product :</b> Women Shirt Printed
-                  </ProductName>
-                  <ProductId>
-                    <b>ID :</b> 89345904
-                  </ProductId>
-                  <ProductColor color="black" />
-                  <ProductSize>
-                    <b>Size :</b> 37.5
-                  </ProductSize>
-                </Details>
-              </ProductDetail>
-              <PriceDetail>
-                <ProductAmountContainer>
-                  <AddOutlinedIcon />
-                  <ProductAmount>2</ProductAmount>
-                  <RemoveOutlinedIcon />
-                </ProductAmountContainer>
-                <ProductPrice>$ 40</ProductPrice>
-              </PriceDetail>
-            </Product>
+            {cart.products?.map((product) => (
+              <Product key={product._id}>
+                <ProductDetail>
+                  <Image src={product.img} />
+                  <Details>
+                    <ProductName>
+                      <b>Product :</b> {product.title}
+                    </ProductName>
+                    <ProductId>
+                      <b>ID :</b> {product._id}
+                    </ProductId>
+                    <ProductColor color={product.color} />
+                    <ProductSize>
+                      <b>Size :</b> {product.size}
+                    </ProductSize>
+                  </Details>
+                </ProductDetail>
+                <PriceDetail>
+                  <ProductAmountContainer>
+                    <AddOutlinedIcon />
+                    <ProductAmount>{product.quantity}</ProductAmount>
+                    <RemoveOutlinedIcon />
+                  </ProductAmountContainer>
+                  <ProductPrice>
+                    $ {product.price * product.quantity}
+                  </ProductPrice>
+                </PriceDetail>
+              </Product>
+            ))}
           </Info>
           <Summary>
             <SummaryTitle>Order Summary</SummaryTitle>
             <SummaryItem>
               <SummaryItemText>Subtotal</SummaryItemText>
-              <SummaryItemPrice>$ 80</SummaryItemPrice>
+              <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText>Estimated Shipping</SummaryItemText>
@@ -241,7 +224,7 @@ const Cart = () => {
             </SummaryItem>
             <SummaryItem type="total">
               <SummaryItemText>Total </SummaryItemText>
-              <SummaryItemPrice>$ -5.90</SummaryItemPrice>
+              <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
             </SummaryItem>
 
             <Button>Checkout Now</Button>
