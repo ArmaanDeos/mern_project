@@ -19,11 +19,17 @@ const Left = styled.div`
   flex: 1;
 `;
 
-const Logo = styled.h2`
-  font-size: 30px;
-  font-weight: 700;
-  cursor: pointer;
-  color: royalblue;
+// const Logo = styled.h2`
+//   font-size: 30px;
+//   font-weight: 700;
+//   cursor: pointer;
+//   color: royalblue;
+// `;
+
+const LogoImg = styled.img`
+  width: 40%;
+  height: 40px;
+  object-fit: cover;
 `;
 
 const Center = styled.div`
@@ -75,7 +81,8 @@ const Navbar = () => {
     <Container>
       <Wrapper>
         <Left>
-          <Logo>rymoShop</Logo>
+          {/* <Logo>rymoShop</Logo> */}
+          <LogoImg src="https://i.ibb.co/vjtKmPM/LOGO.png" />
         </Left>
         <Center>
           <SearchContainer>

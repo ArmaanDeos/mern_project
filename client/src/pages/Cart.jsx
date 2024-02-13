@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Navbar from "../components/Navbar";
 import Announcement from "../components/Announcement";
@@ -7,6 +7,11 @@ import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import RemoveOutlinedIcon from "@mui/icons-material/RemoveOutlined";
 import { useSelector } from "react-redux";
 import StripeCheckout from "react-stripe-checkout";
+import { userRequest } from "../utilities/requestMethods";
+import { useNavigate } from "react-router-dom";
+
+// Use import.meta.env to access environment variables in Vite
+const stripeKey = import.meta.env.VITE_REACT_APP_STRIPE_PUBLIC_KEY;
 
 const Container = styled.div``;
 
@@ -160,7 +165,32 @@ const Button = styled.button`
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
+  const history = useNavigate();
   // console.log(cart);
+
+  const [stripeToken, setStripeToken] = useState(null);
+
+  const onToken = (token) => {
+    setStripeToken(token);
+  };
+
+  useEffect(() => {
+    const makeRequest = async () => {
+      try {
+        const res = await userRequest.post("/checkout/payment", {
+          tokenId: stripeToken.id,
+          amount: 500,
+        });
+        history.push("/success", {
+          stripeData: res.data,
+          products: cart,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    stripeToken && makeRequest();
+  }, [stripeToken, cart, history]);
 
   return (
     <Container>
@@ -227,7 +257,18 @@ const Cart = () => {
               <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
             </SummaryItem>
 
-            <Button>Checkout Now</Button>
+            <StripeCheckout
+              name="rymo shop"
+              image="https://i.ibb.co/vjtKmPM/LOGO.png"
+              billingAddress
+              shippingAddress
+              description={`Your total is $${cart.total}`}
+              amount={cart.total * 100} // stripe work with cent so multiply by 100 to convert into dollar.
+              token={onToken}
+              stripeKey={stripeKey}
+            >
+              <Button>Checkout Now</Button>
+            </StripeCheckout>
           </Summary>
         </Bottom>
       </Wrapper>
