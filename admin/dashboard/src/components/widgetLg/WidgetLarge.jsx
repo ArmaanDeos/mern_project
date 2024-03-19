@@ -1,6 +1,23 @@
+import { useEffect, useState } from "react";
 import "./widgetlg.css";
+import { userRequest } from "../../utilities/requestMethods";
+import { format } from "timeago.js";
 
 const WidgetLarge = () => {
+  const [orders, setOrders] = useState([]);
+
+  useEffect(() => {
+    const getOrders = async () => {
+      try {
+        const res = await userRequest.get("orders");
+        setOrders(res.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getOrders();
+  }, []);
+
   // button component
   const Button = ({ type }) => {
     return <button className={`widgetLgBtn ${type}`}>{type}</button>;
@@ -18,85 +35,18 @@ const WidgetLarge = () => {
           <th className="tableTh">Status</th>
         </tr>
 
-        <tr className="tableTr">
-          <td className="tableTdUser">
-            <img
-              className="tableImg"
-              src="https://upload.wikimedia.org/wikipedia/en/8/86/Avatar_Aang.png"
-              alt=""
-            />
-            <span className="tableName">Susan Carol</span>
-          </td>
-          <td className="tableTdDate">2 Jun 2023</td>
-          <td className="tableTdAmount">$122.09</td>
-          <td className="tableTdStatus">
-            <Button type="Approved" />
-          </td>
-        </tr>
-
-        <tr className="tableTr">
-          <td className="tableTdUser">
-            <img
-              className="tableImg"
-              src="https://upload.wikimedia.org/wikipedia/en/8/86/Avatar_Aang.png"
-              alt=""
-            />
-            <span className="tableName">Susan Carol</span>
-          </td>
-          <td className="tableTdDate">2 Jun 2023</td>
-          <td className="tableTdAmount">$122.09</td>
-          <td className="tableTdStatus">
-            <Button type="Approved" />
-          </td>
-        </tr>
-
-        <tr className="tableTr">
-          <td className="tableTdUser">
-            <img
-              className="tableImg"
-              src="https://upload.wikimedia.org/wikipedia/en/8/86/Avatar_Aang.png"
-              alt=""
-            />
-            <span className="tableName">Susan Carol</span>
-          </td>
-          <td className="tableTdDate">2 Jun 2023</td>
-          <td className="tableTdAmount">$122.09</td>
-          <td className="tableTdStatus">
-            <Button type="Pending" />
-          </td>
-        </tr>
-
-        <tr className="tableTr">
-          <td className="tableTdUser">
-            <img
-              className="tableImg"
-              src="https://upload.wikimedia.org/wikipedia/en/8/86/Avatar_Aang.png"
-              alt=""
-            />
-            <span className="tableName">Susan Carol</span>
-          </td>
-          <td className="tableTdDate">2 Jun 2023</td>
-          <td className="tableTdAmount">$122.09</td>
-          <td className="tableTdStatus">
-            <Button type="Pending" />
-          </td>
-        </tr>
-
-        <tr className="tableTr">
-          <td className="tableTdUser">
-            <img
-              className="tableImg"
-              src="https://upload.wikimedia.org/wikipedia/en/8/86/Avatar_Aang.png"
-              alt=""
-            />
-            <span className="tableName">Susan Carol</span>
-          </td>
-          <td className="tableTdDate">2 Jun 2023</td>
-          <td className="tableTdAmount">$122.09</td>
-          <td className="tableTdStatus">
-            <Button type="Declined" />
-          </td>
-        </tr>
+        {orders.map((order) => (
+          <tr className="tableTr" key={order._id}>
+            <td className="tableTdUser">
+              <span className="tableName">{order.userId}</span>
+            </td>
+            <td className="tableTdDate">{format(order.createdAt)}</td>
+            <td className="tableTdAmount">{order.amount}</td>
+            <td className="tableTdStatus">
+              <Button type={order.status} />
+            </td>
+          </tr>
+        ))}
       </table>
     </div>
   );
