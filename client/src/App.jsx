@@ -11,9 +11,15 @@ import Cart from "./pages/Cart";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Success from "./pages/Success";
+import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 
 const App = () => {
-  const user = true; // Example value, replace with your actual user authentication logic
+  // const user = false; // Example value, replace with your actual user authentication logic
+
+  // const user = useSelector((state) => state.user.currentUser);
+  // console.log(user);
+  const user = useSelector((state) => state.user.currentUser);
 
   return (
     <Router>
