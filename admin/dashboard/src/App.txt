@@ -19,18 +19,25 @@ const App = () => {
 
   return (
     <BrowserRouter>
+      {/* Show the topbar and sidebar for all pages except /login */}
       <ConditionalTopbar />
       <div className="fixedContainer">
         <ConditionalSidebar />
         <Routes>
-          <Route exact path="/" element={<Home />} />
-          <Route path="/users" element={<UserList />} />
-          <Route path="/user/:userId" element={<User />} />
-          <Route path="/newUser" element={<NewUser />} />
-          <Route path="/products" element={<ProductList />} />
-          <Route path="/product/:productId" element={<Product />} />
-          <Route path="/newproduct" element={<NewProduct />} />
-          {!isAdmin && <Route path="/login" element={<Login />} />}
+          {/* Show all routes if user is an admin */}
+          {isAdmin && (
+            <>
+              <Route exact path="/" element={<Home />} />
+              <Route path="/users" element={<UserList />} />
+              <Route path="/user/:userId" element={<User />} />
+              <Route path="/newUser" element={<NewUser />} />
+              <Route path="/products" element={<ProductList />} />
+              <Route path="/product/:productId" element={<Product />} />
+              <Route path="/newproduct" element={<NewProduct />} />
+            </>
+          )}
+          {/* Always show login route */}
+          <Route path="/login" element={<Login />} />
         </Routes>
       </div>
     </BrowserRouter>
