@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-// import { popularProducts } from "../data";
 import Product from "./Product";
 import axios from "axios";
 
@@ -12,7 +11,6 @@ const Container = styled.div`
 `;
 
 const Products = ({ cat, filters, sort }) => {
-  // console.log(cat, filters, sort);
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
 
@@ -25,7 +23,6 @@ const Products = ({ cat, filters, sort }) => {
             ? `https://rymo-shop-api.onrender.com/api/v1/products?category=${cat}`
             : "https://rymo-shop-api.onrender.com/api/v1/products"
         );
-        // console.log(res.data.data);
         if (Array.isArray(res.data.data)) {
           setProducts(res.data.data);
         } else {
@@ -38,37 +35,55 @@ const Products = ({ cat, filters, sort }) => {
     getProducts();
   }, [cat]);
 
-  // Products data based on filters
+  // Products data based on filters and sort
   useEffect(() => {
-    if (cat && products.length > 0) {
-      const filtered = products.filter((item) =>
-        Object.entries(filters).every(([key, value]) => {
-          return item[key].includes(value);
-        })
-      );
-      setFilteredProducts(filtered);
-    } else {
-      // Handle the case when products are not available or filters are not set
-      setFilteredProducts([]);
-    }
-  }, [products, cat, filters]);
-
-  // Products data based on sort
-  useEffect(() => {
-    if (filteredProducts.length > 0) {
-      if (sort === "newest") {
-        setFilteredProducts((prev) => {
-          [...prev].sort((a, b) => a.createdAt - b.createdAt);
-        });
-      } else if (sort === "asc") {
-        setFilteredProducts((prev) =>
-          [...prev].sort((a, b) => a.price - b.price)
-        );
-      } else {
-        setFilteredProducts((prev) =>
-          [...prev].sort((a, b) => b.price - a.price)
+    if (products.length > 0) {
+      let filtered = [...products];
+      // console.log(...products);
+      if (filters) {
+        filtered = filtered.filter((item) =>
+          Object.entries(filters).every(([key, value]) =>
+            item[key].includes(value)
+          )
         );
       }
+
+      if (sort === "newest") {
+        filtered.sort((a, b) => a.createdAt - b.createdAt);
+      } else if (sort === "asc") {
+        filtered.sort((a, b) => a.price - b.price);
+      } else if (sort === "desc") {
+        filtered.sort((a, b) => b.price - a.price);
+      }
+
+      setFilteredProducts(filtered);
+    }
+  }, [products, filters, sort]);
+
+  // useEffect(() => {
+  //   cat &&
+  //     setFilteredProducts(
+  //       products.filter((item) =>
+  //         Object.entries(filters).every(([key, value]) =>
+  //           item[key].includes(value)
+  //         )
+  //       )
+  //     );
+  // }, [products, cat, filters]);
+
+  useEffect(() => {
+    if (sort === "newest") {
+      setFilteredProducts((prev) =>
+        [...prev].sort((a, b) => a.createdAt - b.createdAt)
+      );
+    } else if (sort === "asc") {
+      setFilteredProducts((prev) =>
+        [...prev].sort((a, b) => a.price - b.price)
+      );
+    } else {
+      setFilteredProducts((prev) =>
+        [...prev].sort((a, b) => b.price - a.price)
+      );
     }
   }, [sort]);
 

@@ -8,6 +8,7 @@ import RemoveOutlinedIcon from "@mui/icons-material/RemoveOutlined";
 import { useSelector } from "react-redux";
 import StripeCheckout from "react-stripe-checkout";
 import { userRequest } from "../utilities/requestMethods";
+
 import { useNavigate } from "react-router-dom";
 
 // Use import.meta.env to access environment variables in Vite
@@ -165,7 +166,8 @@ const Button = styled.button`
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
-  const history = useNavigate();
+
+  // const history = useNavigate();
   // console.log(cart);
 
   const [stripeToken, setStripeToken] = useState(null);
@@ -173,24 +175,29 @@ const Cart = () => {
   const onToken = (token) => {
     setStripeToken(token);
   };
+  // console.log(stripeToken);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const makeRequest = async () => {
       try {
         const res = await userRequest.post("/checkout/payment", {
-          tokenId: stripeToken.id,
-          amount: 500,
+          tokenId: stripeToken,
+          amount: cart.total * 100,
         });
-        history.push("/success", {
-          stripeData: res.data,
-          products: cart,
+        navigate("/success", {
+          state: {
+            stripeData: res.data,
+            products: cart,
+          },
         });
       } catch (error) {
         console.log(error);
       }
     };
     stripeToken && makeRequest();
-  }, [stripeToken, cart, history]);
+  }, [stripeToken, cart, navigate]);
 
   return (
     <Container>

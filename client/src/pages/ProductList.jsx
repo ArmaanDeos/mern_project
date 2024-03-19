@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Navbar from "../components/Navbar";
 import Announcement from "../components/Announcement";
@@ -38,11 +38,13 @@ const Option = styled.option``;
 const ProductList = () => {
   const [filters, setFilters] = useState([]);
   const [sort, setSort] = useState("newest");
+  const [cat, setCat] = useState("");
 
   // get category
   const location = useLocation();
-  const cat = location.pathname.split("/")[2];
-  // console.log(cat);
+  useEffect(() => {
+    setCat(location.pathname.split("/")[2]);
+  }, [location.pathname]);
 
   const handleFilters = (e) => {
     const value = e.target.value;
@@ -51,7 +53,6 @@ const ProductList = () => {
       [e.target.name]: value,
     });
   };
-  // console.log(filters);
 
   return (
     <Container>
@@ -61,7 +62,7 @@ const ProductList = () => {
       <FilterContainer>
         <Filter>
           <FilterText>Filter Products :</FilterText>
-          <Select name="color" onChange={handleFilters} defaultValue={""}>
+          <Select name="color" onChange={handleFilters}>
             <Option disabled>Color</Option>
             <Option>White</Option>
             <Option>Black</Option>
