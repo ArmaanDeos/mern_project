@@ -16,6 +16,7 @@ const App = () => {
   const isAdmin = JSON.parse(
     JSON.parse(localStorage.getItem("persist:root")).user
   ).currentUser.data.isAdmin;
+  // const isAdmin = false;
 
   return (
     <BrowserRouter>

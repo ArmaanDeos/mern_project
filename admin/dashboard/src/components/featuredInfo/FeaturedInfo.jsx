@@ -32,6 +32,8 @@ const FeaturedInfo = () => {
     };
     getIncome();
   }, []);
+  console.log(income);
+  console.log(salePercentage);
 
   return (
     <div className="featured">

@@ -3,12 +3,21 @@ import { DataGrid } from "@mui/x-data-grid";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { productrow } from "../../dummyData";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getProducts } from "../../redux/apiCalls";
 
 const ProductList = () => {
+  const dispatch = useDispatch();
+
   const [data, setData] = useState(productrow);
 
-  // console.log(productrow);
+  const products = useSelector((state) => state.product.products);
+  // console.log(products.data);
+
+  useEffect(() => {
+    getProducts(dispatch);
+  }, [dispatch]);
 
   const handleDelete = (id) => {
     alert("Delete this Product...");
@@ -16,7 +25,7 @@ const ProductList = () => {
   };
 
   const columns = [
-    { field: "id", headerName: "ID", width: 90 },
+    { field: "_id", headerName: "ID", width: 250 },
     {
       field: "product",
       headerName: "Product",
@@ -25,13 +34,13 @@ const ProductList = () => {
         return (
           <div className="productListData">
             <img className="productListDataImg" src={params.row.img} alt="" />
-            {params.row.name}
+            {params.row.title}
           </div>
         );
       },
     },
-    { field: "stock", headerName: "Stock", width: 200 },
-    { field: "status", headerName: "Status", width: 120 },
+    { field: "inStock", headerName: "Stock", width: 200 },
+
     { field: "price", headerName: "Price", width: 160 },
     {
       field: "action",
@@ -56,7 +65,8 @@ const ProductList = () => {
   return (
     <div className="productList">
       <DataGrid
-        rows={data}
+        rows={products.data}
+        getRowId={(row) => row._id}
         disableRowSelectionOnClick
         columns={columns}
         initialState={{
