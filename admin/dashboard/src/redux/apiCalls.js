@@ -1,6 +1,9 @@
 import { loginFailure, loginStart, loginSuccess } from "./userSlice";
-import { publicRequest } from "../utilities/requestMethods";
+import { publicRequest, userRequest } from "../utilities/requestMethods";
 import {
+  deleteProductFailure,
+  deleteProductStart,
+  deleteProductSuccess,
   getProductsFailure,
   getProductsStart,
   getProductsSuccess,
@@ -27,5 +30,17 @@ export const getProducts = async (dispatch) => {
     dispatch(getProductsSuccess(res.data));
   } catch (err) {
     dispatch(getProductsFailure());
+  }
+};
+
+// DELETE PRODUCT DISPATCH FUNCTION
+
+export const deleteProducts = async (id, dispatch) => {
+  dispatch(deleteProductStart());
+  try {
+    // const res = await userRequest.delete(`/products/${id}`);
+    dispatch(deleteProductSuccess(id));
+  } catch (error) {
+    dispatch(deleteProductFailure());
   }
 };
