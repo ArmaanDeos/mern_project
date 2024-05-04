@@ -10,8 +10,8 @@ import { deleteProducts, getProducts } from "../../redux/apiCalls";
 const ProductList = () => {
   const dispatch = useDispatch();
 
-  const products = useSelector((state) => state.product.products);
-  // console.log(products.data);
+  const products = useSelector((state) => state.product.products.data);
+  // console.log(products);
 
   useEffect(() => {
     getProducts(dispatch);
@@ -63,7 +63,7 @@ const ProductList = () => {
   return (
     <div className="productList">
       <DataGrid
-        rows={products.data}
+        rows={products}
         getRowId={(row) => row._id}
         disableRowSelectionOnClick
         columns={columns}

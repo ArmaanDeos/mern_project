@@ -131,7 +131,6 @@ const Product = () => {
     const getProduct = async () => {
       try {
         const res = await publicRequest.get(`/products/find/${id}`);
-        // console.log(res.data.data);
         setProduct(res.data.data);
       } catch (error) {
         console.log(error);
@@ -143,9 +142,6 @@ const Product = () => {
   const handleQuantity = (type) => {
     if (type === "dec") {
       quantity > 1 && setQuantity(quantity - 1);
-      // if (quantity > 1) {
-      //   setQuantity(quantity - 1);
-      // }
     } else {
       setQuantity(quantity + 1);
     }

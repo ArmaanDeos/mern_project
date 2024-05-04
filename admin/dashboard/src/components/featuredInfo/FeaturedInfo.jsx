@@ -1,11 +1,11 @@
-import "./featuredinfo.css";
+import React, { useEffect, useState } from "react";
+import "./featuredinfo.css"; // Fix import statement
 import ArrowDownwardOutlinedIcon from "@mui/icons-material/ArrowDownwardOutlined";
 import ArrowUpwardOutlinedIcon from "@mui/icons-material/ArrowUpwardOutlined";
-import { useEffect, useState } from "react";
 import { userRequest } from "../../utilities/requestMethods";
 
 const FeaturedInfo = () => {
-  const [income, setIncome] = useState({ total: 0 });
+  const [income, setIncome] = useState([]); // Initialize income as an object
   const [salePercentage, setSalePercentage] = useState(0);
 
   useEffect(() => {
@@ -16,13 +16,14 @@ const FeaturedInfo = () => {
           // Calculate salePercentage only if there are at least two income data entries
           const totalToday = res.data.data[0].total;
           const totalYesterday = res.data.data[1].total;
-          const salePercentage =
+
+          const salePercent =
             totalToday !== 0
               ? ((totalToday - totalYesterday) / totalToday) * 100
               : 0;
 
           setIncome({ total: totalToday });
-          setSalePercentage(salePercentage);
+          setSalePercentage(salePercent);
         } else {
           console.error("Invalid income data format:", res.data);
         }
@@ -32,8 +33,6 @@ const FeaturedInfo = () => {
     };
     getIncome();
   }, []);
-  console.log(income);
-  console.log(salePercentage);
 
   return (
     <div className="featured">
@@ -43,7 +42,7 @@ const FeaturedInfo = () => {
         <div className="featuredMoneyContainer">
           <span className="featuredMoney">$ {income.total}</span>
           <span className="featuredMoneyRate">
-            %{Math.floor(salePercentage)}
+            %{Math.abs(Math.floor(salePercentage))} {/* Take absolute value */}
             {salePercentage < 0 ? (
               <ArrowDownwardOutlinedIcon className="featuredIcon negative" />
             ) : (
@@ -72,7 +71,7 @@ const FeaturedInfo = () => {
           <span className="featuredMoney">$ 2,415</span>
           <span className="featuredMoneyRate">
             +2.4
-            <ArrowUpwardOutlinedIcon className="featuredIcon " />
+            <ArrowUpwardOutlinedIcon className="featuredIcon" />
           </span>
         </div>
         <span className="featuredSub">Compared to last month</span>

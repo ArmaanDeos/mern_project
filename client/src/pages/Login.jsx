@@ -105,7 +105,7 @@ const Login = () => {
           {error && <Error>Something went wrong.....</Error>}
         </Form>
         <Link>Do not you remember the password?</Link>
-        <Link>Create a New Account</Link>
+        <Link to="/register">Create a New Account</Link>
       </Wrapper>
     </Container>
   );

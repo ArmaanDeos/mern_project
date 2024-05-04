@@ -10,6 +10,7 @@ import {
   getUserStats,
   updateUser,
 } from "../controllers/user.controllers.js";
+import { logoutUser } from "../controllers/auth.controllers.js";
 const router = Router();
 
 router.route("/:id").put(verifyTokenAndAuthorization, updateUser);
@@ -19,6 +20,8 @@ router.route("/:id").delete(verifyTokenAndAuthorization, deletUser);
 router.route("/find/:id").get(verifyTokenAndAdmin, getUser);
 
 router.route("/").get(getAllUsers);
+
+router.route("/logout").get(logoutUser);
 
 router.route("/stats").get(verifyTokenAndAdmin, getUserStats);
 

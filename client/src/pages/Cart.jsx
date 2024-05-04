@@ -8,8 +8,10 @@ import RemoveOutlinedIcon from "@mui/icons-material/RemoveOutlined";
 import { useSelector } from "react-redux";
 import StripeCheckout from "react-stripe-checkout";
 import { userRequest } from "../utilities/requestMethods";
+import { useDispatch } from "react-redux";
 
 import { useNavigate } from "react-router-dom";
+import { removeProduct } from "../redux/cartSlice";
 
 // Use import.meta.env to access environment variables in Vite
 const stripeKey = import.meta.env.VITE_REACT_APP_STRIPE_PUBLIC_KEY;
@@ -166,6 +168,8 @@ const Button = styled.button`
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
+  console.log(cart);
+  const dispatch = useDispatch();
 
   // const history = useNavigate();
   // console.log(cart);
@@ -186,6 +190,7 @@ const Cart = () => {
           tokenId: stripeToken,
           amount: cart.total * 100,
         });
+        dispatch(removeProduct());
         navigate("/success", {
           state: {
             stripeData: res.data,
@@ -197,7 +202,7 @@ const Cart = () => {
       }
     };
     stripeToken && makeRequest();
-  }, [stripeToken, cart, navigate]);
+  }, [stripeToken, cart, dispatch, navigate]);
 
   return (
     <Container>
@@ -215,8 +220,8 @@ const Cart = () => {
         </Top>
         <Bottom>
           <Info>
-            {cart.products?.map((product) => (
-              <Product key={product._id}>
+            {cart.products?.map((product, index) => (
+              <Product key={index}>
                 <ProductDetail>
                   <Image src={product.img} />
                   <Details>

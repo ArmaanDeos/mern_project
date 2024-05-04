@@ -47,6 +47,9 @@ const Products = ({ cat, filters, sort }) => {
           )
         );
       }
+      if (filtered.length === 0) {
+        alert("Oops! Products Not Found");
+      }
 
       if (sort === "newest") {
         filtered.sort((a, b) => a.createdAt - b.createdAt);
@@ -59,17 +62,6 @@ const Products = ({ cat, filters, sort }) => {
       setFilteredProducts(filtered);
     }
   }, [products, filters, sort]);
-
-  // useEffect(() => {
-  //   cat &&
-  //     setFilteredProducts(
-  //       products.filter((item) =>
-  //         Object.entries(filters).every(([key, value]) =>
-  //           item[key].includes(value)
-  //         )
-  //       )
-  //     );
-  // }, [products, cat, filters]);
 
   useEffect(() => {
     if (sort === "newest") {

@@ -42,6 +42,7 @@ const ProductList = () => {
 
   // get category
   const location = useLocation();
+  // console.log(location);
   useEffect(() => {
     setCat(location.pathname.split("/")[2]);
   }, [location.pathname]);

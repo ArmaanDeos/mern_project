@@ -1,19 +1,64 @@
 import "./product.css";
 import { Link, useLocation } from "react-router-dom";
 import Chart from "../../components/chart/Chart";
-import { productData } from "../../dummyData";
+
 import PublishIcon from "@mui/icons-material/Publish";
 import { useSelector } from "react-redux";
+import { useEffect, useMemo, useState } from "react";
+import { userRequest } from "../../utilities/requestMethods";
 
 const Product = () => {
   const location = useLocation();
   const productId = location.pathname.split("/")[2];
+  const [salesProduct, setSalesProduct] = useState([]);
   // console.log(productId);
 
   const product = useSelector((state) =>
     state.product.products.data.find((item) => item._id === productId)
   );
-  console.log(product);
+  // console.log(product);
+
+  const MONTHS = useMemo(
+    () => [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Agu",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ],
+    []
+  );
+
+  useEffect(() => {
+    const getProductSalesStats = async () => {
+      try {
+        const res = await userRequest.get(`/orders/income?pid=${productId}`);
+        const list = res.data.data.sort((a, b) => {
+          return a._id - b._id;
+        });
+        // console.log(res.data.data);
+        list.map((item) => {
+          setSalesProduct((prev) => [
+            ...prev,
+            {
+              name: MONTHS[item._id - 1],
+              Sales: item.total,
+            },
+          ]);
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getProductSalesStats();
+  }, [MONTHS, productId]);
 
   return (
     <div className="product">
@@ -26,7 +71,11 @@ const Product = () => {
 
       <div className="productTop">
         <div className="productTopLeft">
-          <Chart data={productData} dataKey="Sales" title="Sales Performance" />
+          <Chart
+            data={salesProduct}
+            dataKey="Sales"
+            title="Sales Performance"
+          />
         </div>
         <div className="productTopRight">
           <div className="productInfoTop">

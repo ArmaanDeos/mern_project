@@ -22,10 +22,27 @@ const cartSlice = createSlice({
       // Adding the price of the product to the total cost
       state.total += action.payload.price * action.payload.quantity; // Assuming payload contains the price of the product
     },
+
+    removeProduct: (state, action) => {
+      // Finding the index of the product to be removed
+      const index = state.products.findIndex(
+        (product) => product.id === action.payload
+      );
+      // If the product is found
+      if (index !== -1) {
+        // Decrementing the quantity of products in the cart
+        state.quantity -= state.products[index].quantity;
+        // Subtracting the price of the product from the total cost
+        state.total -=
+          state.products[index].price * state.products[index].quantity;
+        // Removing the product from the products array
+        state.products.splice(index, 1);
+      }
+    },
   },
 });
 
 // Exporting the addProduct action creator
-export const { addProduct } = cartSlice.actions;
+export const { addProduct, removeProduct } = cartSlice.actions;
 // Exporting the cartSlice reducer
 export default cartSlice.reducer;

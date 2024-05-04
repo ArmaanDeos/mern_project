@@ -19,13 +19,6 @@ const Left = styled.div`
   flex: 1;
 `;
 
-// const Logo = styled.h2`
-//   font-size: 30px;
-//   font-weight: 700;
-//   cursor: pointer;
-//   color: royalblue;
-// `;
-
 const LogoImg = styled.img`
   width: 40%;
   height: 40px;
@@ -75,14 +68,16 @@ const MenuItem = styled.div`
 
 const Navbar = () => {
   const quantity = useSelector((state) => state.cart.quantity);
-  // console.log(quantity);
+  const user = useSelector((state) => state.user.currentUser);
+  console.log(user);
 
   return (
     <Container>
       <Wrapper>
         <Left>
-          {/* <Logo>rymoShop</Logo> */}
-          <LogoImg src="https://i.ibb.co/vjtKmPM/LOGO.png" />
+          <Link to={"/"}>
+            <LogoImg src="https://i.ibb.co/vjtKmPM/LOGO.png" />
+          </Link>
         </Left>
         <Center>
           <SearchContainer>
@@ -91,8 +86,14 @@ const Navbar = () => {
           </SearchContainer>
         </Center>
         <Right>
-          <MenuItem>Register</MenuItem>
-          <MenuItem>Sign In</MenuItem>
+          <Link to={user ? "/logout" : "/login"}>
+            <MenuItem>{user ? "Logout" : "Sign In"}</MenuItem>{" "}
+          </Link>
+          {!user && (
+            <Link to={"/register"}>
+              <MenuItem>Register</MenuItem>
+            </Link>
+          )}
           <Link to="/cart">
             <MenuItem>
               <Badge badgeContent={quantity} color="primary">
